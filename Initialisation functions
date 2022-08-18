@@ -1,0 +1,20 @@
+PyMODINIT_FUNC
+PyInit_mymodel(void)
+{
+    PyObject *m;
+    if (PyType_Ready(&UserType) < 0)
+        return NULL;
+
+    m = PyModule_Create(&mymodelmodule);
+    if (m == NULL)
+        return NULL;
+
+    Py_INCREF(&UserType);
+    if (PyModule_AddObject(m, "User", (PyObject *) &UserType) < 0) {
+        Py_DECREF(&UserType);
+        Py_DECREF(m);
+        return NULL;
+    }
+
+    return m;
+}
