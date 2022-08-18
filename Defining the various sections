@@ -1,0 +1,24 @@
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+
+typedef struct {
+    PyObject_HEAD
+    /* 此处定义其他字段. */
+} UserObject;
+
+static PyTypeObject UserType = {
+    PyVarObject_HEAD_INIT(NULL, 0)
+    .tp_name = "mymodel.User",
+    .tp_doc = "User objects",
+    .tp_basicsize = sizeof(UserObject),
+    .tp_itemsize = 0,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_new = PyType_GenericNew,
+};
+
+static PyModuleDef mymodelmodule = {
+    PyModuleDef_HEAD_INIT,
+    .m_name = "mymodel",
+    .m_doc = "Example module that creates an extension type.",
+    .m_size = -1,
+};
